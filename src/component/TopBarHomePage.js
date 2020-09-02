@@ -1,8 +1,21 @@
-function TopBarExample() {
+import React, {useCallback, useState} from 'react';
+import {ActionList, AppProvider, Card, Frame, Icon, Navigation, TopBar, VisuallyHidden} from '@shopify/polaris';
+import {
+	AnalyticsMajorMonotone, AppsMajorMonotone,
+	ArrowLeftMinor, CashDollarMajorMonotone, ChatMajorMonotone,
+	QuestionMarkMajorTwotone,
+	ReferralMajorMonotone, SettingsMajorMonotone,
+	StoreMajorMonotone, TeamMajorMonotone, VocabularyMajorMonotone
+} from '@shopify/polaris-icons';
+import "@shopify/polaris/dist/styles.css";
+
+
+export default function TopBarHomePage() {
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 	const [isSecondaryMenuOpen, setIsSecondaryMenuOpen] = useState(false);
 	const [isSearchActive, setIsSearchActive] = useState(false);
 	const [searchValue, setSearchValue] = useState('');
+	
 	
 	const toggleIsUserMenuOpen = useCallback(
 		() => setIsUserMenuOpen((isUserMenuOpen) => !isUserMenuOpen),
@@ -31,13 +44,13 @@ function TopBarExample() {
 	const theme = {
 		colors: {
 			topBar: {
-				background: '#357997',
+				background: '#34485f',
 			},
 		},
 		logo: {
 			width: 124,
 			topBarSource:
-				'https://cdn.shopify.com/s/files/1/0446/6937/files/jaded-pixel-logo-color.svg?6215648040070010999',
+				'https://media.flaticon.com/dist/min/img/logo/flaticon_negative.svg',
 			url: 'http://jadedpixel.com',
 			accessibilityLabel: 'Jaded Pixel',
 		},
@@ -85,7 +98,7 @@ function TopBarExample() {
 		<TopBar.Menu
 			activatorContent={
 				<span>
-          <Icon source={QuestionMarkMajorTwotone} />
+          <Icon source={QuestionMarkMajorTwotone}/>
           <VisuallyHidden>Secondary menu</VisuallyHidden>
         </span>
 			}
@@ -100,6 +113,67 @@ function TopBarExample() {
 		/>
 	);
 	
+	const navigationMarkup = (
+		<Navigation location='/'>
+			<Navigation.Section
+				items={[
+					{
+						url: '/path/to/place',
+						label: 'Stores',
+						icon: StoreMajorMonotone,
+					},
+					{
+						url: '/path/to/place',
+						label: 'Referrals',
+						icon: ReferralMajorMonotone,
+					},
+					{
+						url: '/path/to/place',
+						label: 'Affiliate tools',
+						icon: AnalyticsMajorMonotone,
+					},
+					{
+						url: '/path/to/place',
+						label: 'Apps',
+						icon: AppsMajorMonotone,
+					},
+				]}
+			/>
+			<Navigation.Section items={[
+				{
+					url: '/path/to/place',
+					label: 'Payouts',
+					icon: CashDollarMajorMonotone,
+				},
+				{
+					url: '/path/to/place',
+					label: 'Education',
+					icon: VocabularyMajorMonotone,
+				},
+				{
+					url: '/path/to/place',
+					label: 'Support',
+					icon: ChatMajorMonotone,
+				},
+			
+			]}
+			/>
+			<Navigation.Section items={[
+				{
+					url: '/path/to/place',
+					label: 'Team',
+					icon: TeamMajorMonotone,
+				},
+				{
+					url: '/path/to/place',
+					label: 'Settings',
+					icon: SettingsMajorMonotone,
+				}]
+			}
+			/>
+		</Navigation>
+	)
+	
 	const topBarMarkup = (
 		<TopBar
 			showNavigationToggle
@@ -110,8 +184,11 @@ function TopBarExample() {
 			searchResults={searchResultsMarkup}
 			onSearchResultsDismiss={handleSearchResultsDismiss}
 			onNavigationToggle={handleNavigationToggle}
+			navigationMarkup={navigationMarkup}
+		
 		/>
 	);
+	
 	
 	return (
 		<div style={{height: '250px'}}>
@@ -134,7 +211,7 @@ function TopBarExample() {
 					},
 				}}
 			>
-				<Frame topBar={topBarMarkup} />
+				<Frame topBar={topBarMarkup}/>
 			</AppProvider>
 		</div>
 	);
